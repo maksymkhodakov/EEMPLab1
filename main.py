@@ -113,8 +113,12 @@ new_equilibrium_quantity = adjusted_supply_func(new_equilibrium_price, subsidy, 
 consumer_price = new_equilibrium_price
 producer_price = new_equilibrium_price - subsidy
 
+print('Нова ціна споживача ', consumer_price)
+print('Нова ціна виробника ', producer_price)
+print('Нова точка рівноваги ', new_equilibrium_quantity)
 
-# Візуалізація результатів
+# Старий графік без врахуванням субсидії
+'''
 plt.figure(figsize=(10, 6))
 plt.scatter(market_data['Price'], market_data['Demand'], label='Demand data', color='blue')
 plt.scatter(market_data['Price'], market_data['Supply'], label='Supply data', color='red')
@@ -122,6 +126,36 @@ plt.plot(price_range, demand_curve, label=f'Demand curve: $Q_d = {a_demand:.2f}P
 plt.plot(price_range, supply_curve, label=f'Supply curve: $Q_s = {c_supply:.2f}P^{{{d_supply:.2f}}}$', color='red')
 plt.scatter(equilibrium_price, equilibrium_quantity, color='green', label='Equilibrium Point', zorder=5)
 plt.title('Market Demand and Supply Curves')
+plt.xlabel('Price')
+plt.ylabel('Quantity')
+plt.legend()
+plt.grid(True)
+plt.show()
+'''
+
+# Оновлений графік з врахуванням субсидії
+# Оновлений графік з врахуванням субсидії
+plt.figure(figsize=(10, 6))
+
+# Намалювати старі криві попиту та пропозиції
+plt.plot(price_range, demand_curve, label=f'Original Demand curve: $Q_d = {a_demand:.2f}P^{{-{b_demand:.2f}}}$', color='blue')
+plt.plot(price_range, supply_curve, label=f'Original Supply curve: $Q_s = {c_supply:.2f}P^{{{d_supply:.2f}}}$', color='red')
+
+# Намалювати нову криву пропозиції з урахуванням субсидії
+new_supply_curve = [adjusted_supply_func(p, subsidy, c_supply, d_supply) for p in price_range]
+plt.plot(price_range, new_supply_curve, label=f'Adjusted Supply curve with subsidy', color='orange', linestyle='--')
+
+# Відобразити стару та нову точки рівноваги
+plt.scatter(equilibrium_price, equilibrium_quantity, color='green', label='Original Equilibrium Point', zorder=5)
+plt.scatter(consumer_price, new_equilibrium_quantity, color='purple', label='New Equilibrium Point', zorder=5)
+
+# Позначити ціни споживача та виробника
+plt.axhline(y=new_equilibrium_quantity, color='gray', linestyle='--', linewidth=0.5)
+plt.axvline(x=consumer_price, color='purple', linestyle='--', linewidth=0.5, label='Consumer Price')
+plt.axvline(x=producer_price, color='orange', linestyle='--', linewidth=0.5, label='Producer Price (after subsidy)')
+
+# Додати назви осей, заголовок, легенду та сітку
+plt.title('Market Demand and Supply Curves with Subsidy')
 plt.xlabel('Price')
 plt.ylabel('Quantity')
 plt.legend()

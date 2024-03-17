@@ -90,7 +90,7 @@ supply_slope = supply_derivative(equilibrium_price, c_supply, d_supply)
 # Виведення результатів
 print('Похідна кривої попиту ', demand_slope)
 print('Похідна кривої пропозиції ', supply_slope)
-print('Нестабільна ', supply_slope > demand_slope)
+print('Cтабільна ', supply_slope > demand_slope)
 
 # Отримаємо кількості та ціни для першого і останнього спостереження для попиту і пропозиції
 Q1_demand, Q2_demand = market_data['Demand'].iloc[0], market_data['Demand'].iloc[-1]
